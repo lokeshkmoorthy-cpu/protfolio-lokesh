@@ -119,7 +119,7 @@ const App = () => {
 
   const addSkill = () => {
     setModalSection('skills');
-    setModalMode('add-skill');
+    setModalMode('new skills');
     setModalInitial({ name: 'New Skill', level: 75 });
     setModalOpen(true);
   };
