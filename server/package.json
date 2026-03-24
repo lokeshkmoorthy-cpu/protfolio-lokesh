@@ -1,23 +1,21 @@
 {
   "name": "server",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "Backend Server",
+  "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server.js",
-      "predeploy": "npm run build",
-  "deploy": "gh-pages -d build"
+    "dev": "nodemon server.js"
   },
-  "homepage": "https://lokeshkmoorthy-cpu.github.io/protfolio-lokesh",
-
-  "keywords": [],
-  "author": "",
+  "author": "Lokesh",
   "license": "ISC",
   "dependencies": {
     "cors": "^2.8.6",
     "dotenv": "^17.3.1",
     "express": "^5.2.1",
     "mongoose": "^9.3.1"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.0"
   }
 }
