@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import AdminPanel, { AdminPanelProps } from '../UI/AdminPanel';
 
 type HeaderProps = {
   name?: string;
@@ -8,9 +9,10 @@ type HeaderProps = {
     twitter?: string;
     instagram?: string;
   };
+  adminPanel?: AdminPanelProps;
 };
 
-const Header: React.FC<HeaderProps> = ({ name = 'Portfolio', socials }) => {
+const Header: React.FC<HeaderProps> = ({ name = 'Portfolio', socials, adminPanel }) => {
   const [isMobileNavOpen, setMobileNavOpen] = useState(false);
 
   const navLinks = [
@@ -46,7 +48,6 @@ const Header: React.FC<HeaderProps> = ({ name = 'Portfolio', socials }) => {
         </nav>
 
         <div className="header-actions">
-          <a className="btn-primary" href="#contact">Contact Me</a>
           <div className="social">
             {socials?.twitter && <a href={socials.twitter} aria-label="Twitter"><i className="bi bi-twitter-x" /></a>}
             {socials?.linkedin && <a href={socials.linkedin} aria-label="LinkedIn"><i className="bi bi-linkedin" /></a>}
@@ -61,6 +62,12 @@ const Header: React.FC<HeaderProps> = ({ name = 'Portfolio', socials }) => {
             <i className={`bi ${isMobileNavOpen ? 'bi-x-lg' : 'bi-list'}`} />
           </button>
         </div>
+
+        {adminPanel && (
+          <div className="header-admin">
+            <AdminPanel {...adminPanel} />
+          </div>
+        )}
       </div>
     </header>
   );

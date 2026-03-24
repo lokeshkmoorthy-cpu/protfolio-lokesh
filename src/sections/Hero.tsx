@@ -59,9 +59,6 @@ const Hero = ({ data }: { data: HeroData }) => {
       <div className="hero-visual" data-aos="fade-left">
         <div className="glow" />
         <div className="hero-card">
-          <div className="status-chip">
-            {data.availability || 'Available for freelance'}
-          </div>
           <div className="avatar-ring">
             {data.image ? (
               <img src={`/assets/${data.image}`} alt={`${data.name} portrait`} />

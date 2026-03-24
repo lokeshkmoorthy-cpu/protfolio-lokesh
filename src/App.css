@@ -117,6 +117,10 @@ a {
   box-shadow: none;
 }
 
+.header-actions {
+  gap: 10px;
+}
+
 .header-actions .social {
   display: flex;
   gap: 8px;
@@ -556,17 +560,52 @@ a {
 
 /* ------------ Admin Panel ------------ */
 .admin-panel {
-  position: fixed;
-  right: 18px;
-  bottom: 18px;
-  z-index: 9999;
+  position: relative;
+  z-index: 20;
+  font-size: 13px;
+}
+
+.admin-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  border: 1px solid var(--border);
+  background: #fff;
+  padding: 8px 12px;
+  border-radius: 10px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.admin-toggle .dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--accent);
+  display: inline-block;
+}
+
+.admin-toggle:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.admin-dropdown {
+  position: absolute;
+  right: 0;
+  top: calc(100% + 8px);
   background: #fff;
   border: 1px solid var(--border);
   border-radius: 14px;
   box-shadow: var(--shadow);
-  padding: 12px 14px;
-  min-width: 240px;
-  font-size: 13px;
+  padding: 12px;
+  min-width: 260px;
+  display: none;
+}
+
+.admin-dropdown.open {
+  display: block;
 }
 
 .admin-header {
@@ -659,4 +698,43 @@ a {
   display: flex;
   justify-content: flex-end;
   gap: 10px;
+}
+
+.modal-form-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 12px;
+}
+
+.modal-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 13px;
+}
+
+.modal-field input {
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 10px;
+  font-size: 14px;
+}
+
+.header-admin .admin-panel {
+  position: static;
+  box-shadow: none;
+  border: none;
+  padding: 0;
+  margin-left: 12px;
+}
+
+@media (max-width: 900px) {
+  .header-admin {
+    width: 100%;
+  }
+
+  .header-admin .admin-panel {
+    width: 100%;
+    margin-top: 8px;
+  }
 }

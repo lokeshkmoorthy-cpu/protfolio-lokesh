@@ -9,7 +9,7 @@ import './App.css';
 import Header from './components/Layout/Header';
 import Footer from './components/Layout/Footer';
 import BackToTop from './components/UI/BackToTop';
-import AdminPanel from './components/UI/AdminPanel';
+import type { AdminPanelProps } from './components/UI/AdminPanel';
 import JsonEditorModal from './components/UI/JsonEditorModal';
 
 import Hero from './sections/Hero';
@@ -49,6 +49,9 @@ const App = () => {
   const [modalSection, setModalSection] = useState<keyof PortfolioData | null>(null);
   const [modalMode, setModalMode] = useState<'edit' | 'add-skill' | 'add-project'>('edit');
   const [modalInitial, setModalInitial] = useState<any>({});
+  const [modalFields, setModalFields] = useState<
+    { label: string; path: string; type?: 'text' | 'number' }[] | undefined
+  >(undefined);
 
   useEffect(() => {
     AOS.init({ once: true, duration: 700, easing: 'ease-out-cubic' });
@@ -109,18 +112,66 @@ const App = () => {
     }
   };
 
+  const getFieldsForSection = (section: keyof PortfolioData | null) => {
+    switch (section) {
+      case 'hero':
+        return [
+          { label: 'Name', path: 'name' },
+          { label: 'Title', path: 'title' },
+          { label: 'Subtitle', path: 'subtitle' },
+          { label: 'CTA Primary', path: 'ctaPrimary' },
+          { label: 'CTA Secondary', path: 'ctaSecondary' },
+          { label: 'Availability', path: 'availability' },
+          { label: 'Location', path: 'location' },
+          { label: 'Image filename', path: 'image' },
+        ];
+      case 'about':
+        return [
+          { label: 'Title', path: 'title' },
+          { label: 'Subtitle', path: 'subtitle' },
+          { label: 'Description', path: 'description' },
+          { label: 'Image filename', path: 'image' },
+          { label: 'City', path: 'info.city' },
+          { label: 'Phone', path: 'info.phone' },
+          { label: 'Email', path: 'info.email' },
+          { label: 'Website', path: 'info.website' },
+          { label: 'Birthday', path: 'info.birthday' },
+          { label: 'Degree', path: 'info.degree' },
+          { label: 'Age', path: 'info.age', type: 'number' },
+          { label: 'Freelance', path: 'info.freelance' },
+        ];
+      case 'contact':
+        return [
+          { label: 'Address', path: 'address' },
+          { label: 'Email', path: 'email' },
+          { label: 'Phone', path: 'phone' },
+          { label: 'LinkedIn', path: 'socials.linkedin' },
+          { label: 'GitHub', path: 'socials.github' },
+          { label: 'Twitter', path: 'socials.twitter' },
+          { label: 'Instagram', path: 'socials.instagram' },
+        ];
+      default:
+        return undefined; // fallback to JSON editor
+    }
+  };
+
   const editSection = (section: keyof PortfolioData) => {
     if (!data) return;
     setModalSection(section);
     setModalMode('edit');
     setModalInitial(data[section] ?? {});
+    setModalFields(getFieldsForSection(section));
     setModalOpen(true);
   };
 
   const addSkill = () => {
     setModalSection('skills');
-    setModalMode('new skills');
+    setModalMode('add-skill');
     setModalInitial({ name: 'New Skill', level: 75 });
+    setModalFields([
+      { label: 'Name', path: 'name' },
+      { label: 'Level (0-100)', path: 'level', type: 'number' },
+    ]);
     setModalOpen(true);
   };
 
@@ -132,14 +183,35 @@ const App = () => {
       category: 'filter-app',
       img: 'masonry-portfolio-1.jpg',
     });
+    setModalFields([
+      { label: 'Title', path: 'title' },
+      { label: 'Category (e.g. filter-app)', path: 'category' },
+      { label: 'Image filename', path: 'img' },
+    ]);
     setModalOpen(true);
   };
 
   const reload = () => window.location.reload();
 
+  const adminPanelProps: AdminPanelProps = {
+    editMode,
+    setEditMode,
+    saving,
+    status,
+    onEditHero: () => editSection('hero'),
+    onEditAbout: () => editSection('about'),
+    onEditResume: () => editSection('resume'),
+    onEditSkills: () => editSection('skills'),
+    onEditPortfolio: () => editSection('portfolio'),
+    onEditContact: () => editSection('contact'),
+    onAddSkill: addSkill,
+    onAddProject: addProject,
+    onReload: reload,
+  };
+
   return (
     <>
-      <Header name={data?.hero?.name} socials={data?.contact?.socials} />
+      <Header name={data?.hero?.name} socials={data?.contact?.socials} adminPanel={adminPanelProps} />
 
       <main id="main" className="page-shell">
         {!data ? (
@@ -161,21 +233,6 @@ const App = () => {
 
       <Footer />
       <BackToTop />
-      <AdminPanel
-        editMode={editMode}
-        setEditMode={setEditMode}
-        saving={saving}
-        status={status}
-        onEditHero={() => editSection('hero')}
-        onEditAbout={() => editSection('about')}
-        onEditResume={() => editSection('resume')}
-        onEditSkills={() => editSection('skills')}
-        onEditPortfolio={() => editSection('portfolio')}
-        onEditContact={() => editSection('contact')}
-        onAddSkill={addSkill}
-        onAddProject={addProject}
-        onReload={reload}
-      />
       <JsonEditorModal
         open={modalOpen}
         title={
@@ -186,6 +243,7 @@ const App = () => {
             : modalSection || ''
         }
         initial={modalInitial}
+        fields={modalFields}
         onClose={() => setModalOpen(false)}
         onSave={(parsed) => {
           if (!data) return;

@@ -1,9 +1,9 @@
 {
   "hero": {
-    "name": "Lokesh K ",
+    "name": "Lokesh K",
     "title": "AI Full Stack Developer",
     "subtitle": "I craft fast, elegant web experiences from idea to deployment.",
-    "image": "hero.png",
+    "image": "image11.jpeg",
     "ctaPrimary": "View Portfolio",
     "ctaSecondary": "Contact Me",
     "availability": "Available for freelance",
@@ -33,14 +33,14 @@
     "description": "I am a passionate developer who builds modern web applications using React, PHP, and MySQL.",
     "image": "profile.jpg",
     "info": {
-      "birthday": "01 Jan 2000",
+      "birthday": "09 nov 2003",
       "website": "www.lokeshportfolio.com",
-      "phone": "+91 1234567890",
-      "city": "Bangalore",
-      "age": 23,
+      "phone": "+91 9095498299",
+      "city": "Pondicherry",
+      "age": 22,
       "degree": "MCA",
-      "email": "email@gmail.com",
-      "freelance": "Available"
+      "email": "lokeshkmoorthy@gmail.com",
+      "freelance": "unavailable"
     }
   },
   "skills": [
@@ -114,10 +114,10 @@
   ],
   "contact": {
     "address": "Bangalore, India",
-    "email": "email@gmail.com",
-    "phone": "+91 1234567890",
+    "email": "lokeshkmoorthy@gmail.com",
+    "phone": "+91 9095498299",
     "socials": {
-      "linkedin": "https://linkedin.com",
+      "linkedin": "https://www.linkedin.com/in/lokesh-k-03158b358?utm_source=share_via&utm_content=profile&utm_medium=member_android",
       "github": "https://github.com",
       "twitter": "https://twitter.com",
       "instagram": "https://instagram.com"

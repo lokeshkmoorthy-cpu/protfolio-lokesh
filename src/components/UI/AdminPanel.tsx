@@ -1,6 +1,6 @@
 import React from 'react';
 
-type Props = {
+export type AdminPanelProps = {
   editMode: boolean;
   setEditMode: (val: boolean) => void;
   saving: boolean;
@@ -16,7 +16,7 @@ type Props = {
   onReload: () => void;
 };
 
-const AdminPanel: React.FC<Props> = ({
+const AdminPanel: React.FC<AdminPanelProps> = ({
   editMode,
   setEditMode,
   saving,
@@ -33,22 +33,24 @@ const AdminPanel: React.FC<Props> = ({
 }) => {
   return (
     <div className="admin-panel">
-      <div className="admin-header">
-        <label>
-          <input
-            type="checkbox"
-            checked={editMode}
-            onChange={(e) => setEditMode(e.target.checked)}
-          />
-          Edit Mode
-        </label>
-        <span className="admin-status">
-          {saving ? 'Saving…' : status || 'Idle'}
-        </span>
-        <button onClick={onReload} className="admin-btn ghost">Reload</button>
-      </div>
+      <button
+        className="admin-toggle"
+        onClick={() => setEditMode(!editMode)}
+        aria-expanded={editMode}
+      >
+        <span className="dot" />
+        Admin
+        <i className={`bi ${editMode ? 'bi-chevron-up' : 'bi-chevron-down'}`} />
+      </button>
 
-      {editMode && (
+      <div className={`admin-dropdown ${editMode ? 'open' : ''}`}>
+        <div className="admin-header">
+          <span className="admin-status">
+            {saving ? 'Saving…' : status || 'Idle'}
+          </span>
+          <button onClick={onReload} className="admin-btn ghost">⏳</button>
+        </div>
+
         <div className="admin-grid">
           <button onClick={onEditHero} className="admin-btn">Edit Hero</button>
           <button onClick={onEditAbout} className="admin-btn">Edit About</button>
@@ -59,7 +61,7 @@ const AdminPanel: React.FC<Props> = ({
           <button onClick={onAddProject} className="admin-btn ghost">Add Project</button>
           <button onClick={onEditContact} className="admin-btn">Edit Contact</button>
         </div>
-      )}
+      </div>
     </div>
   );
 };
